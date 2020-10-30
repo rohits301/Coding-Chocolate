@@ -44,20 +44,29 @@ public class Main {
         return root;
     }
 
-    static int ceil; // **** REMEMBER**** smallest among larger
-    static int floor; // **** REMEMBER**** largest among smaller
+    // * EXTREMELY IMPORTANT QUESTION
+    static int dia;
+    public static int calculateDiaAndReturnHeight(Node node) {
+        int dch = -1; // * deepest child
+        int sdch = -1; // * second deepest child
 
-    // Travel and Change Strategy
-    public static void ceilAndFloor(Node node, int data) {
-        if (node.data > data) {
-            ceil = Math.min(ceil, node.data);
-        }
-        if (node.data < data) {
-            floor = Math.max(floor, node.data);
-        }
         for (Node child : node.children) {
-            ceilAndFloor(child, data);
+            int ch = calculateDiaAndReturnHeight(child); // * child height
+
+            if (ch > dch) {
+                sdch = dch;
+                dch = ch;
+            } else if (ch > sdch) {
+                sdch = ch;
+            }
         }
+
+        if (dch + sdch + 2 > dia) {
+            dia = dch + sdch + 2;
+        }
+
+        dch += 1;
+        return dch;
     }
 
     public static void main(String[] args) throws Exception {
@@ -69,14 +78,11 @@ public class Main {
             arr[i] = Integer.parseInt(values[i]);
         }
 
-        int data = Integer.parseInt(br.readLine());
-
         Node root = construct(arr);
-        ceil = Integer.MAX_VALUE;
-        floor = Integer.MIN_VALUE;
-        ceilAndFloor(root, data);
-        System.out.println("CEIL = " + ceil);
-        System.out.println("FLOOR = " + floor);
+        // write your code here
+        dia = 0;
+        calculateDiaAndReturnHeight(root);
+        System.out.println(dia);
     }
 
 }
