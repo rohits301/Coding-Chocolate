@@ -44,20 +44,36 @@ public class Main {
         return root;
     }
 
-    static int ceil; // **** REMEMBER**** smallest among larger
-    static int floor; // **** REMEMBER**** largest among smaller
+    /*
+     * This belongs to a very important category, Travel and Change (tac) Return
+     * something else (rse) Calculate something else (cse)
+     */
 
-    // Travel and Change Strategy
-    public static void ceilAndFloor(Node node, int data) {
-        if (node.data > data) {
-            ceil = Math.min(ceil, node.data);
-        }
-        if (node.data < data) {
-            floor = Math.max(floor, node.data);
-        }
+    /*
+     * APPROACH - Every node sum of its subtree including itself we want to
+     * calculate max sum in subtree, so we keep to static members maxSumNode and
+     * maxSum with which we can change max whenver needed it exceeds sum
+     */
+
+    static Node maxSumNode;
+    static int maxSum;
+
+    public static int retSumAndCalculateMSST(Node node) {
+        int sum = 0;
+
         for (Node child : node.children) {
-            ceilAndFloor(child, data);
+            int childSum = retSumAndCalculateMSST(child);
+            sum += childSum;
         }
+
+        sum += node.data;
+
+        if (sum > maxSum) {
+            maxSumNode = node;
+            maxSum = sum;
+        }
+
+        return sum;
     }
 
     public static void main(String[] args) throws Exception {
@@ -69,14 +85,12 @@ public class Main {
             arr[i] = Integer.parseInt(values[i]);
         }
 
-        int data = Integer.parseInt(br.readLine());
-
         Node root = construct(arr);
-        ceil = Integer.MAX_VALUE;
-        floor = Integer.MIN_VALUE;
-        ceilAndFloor(root, data);
-        System.out.println("CEIL = " + ceil);
-        System.out.println("FLOOR = " + floor);
+        // write your code here
+        maxSumNode = null;
+        maxSum = Integer.MIN_VALUE;
+        int noUse = retSumAndCalculateMSST(root);
+        System.out.println(maxSumNode.data + "@" + maxSum);
     }
 
 }
