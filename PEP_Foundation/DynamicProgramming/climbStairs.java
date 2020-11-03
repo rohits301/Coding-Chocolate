@@ -8,15 +8,23 @@ public class Main {
         Scanner scn = new Scanner(System.in);
         int n = scn.nextInt();
 
-        // int ans = climbStairs(n, 0); // * can be solved as stairPaths also, same, just
+        // int ans = climbStairs(n, 0); // * can be solved as stairPaths also, same,
+        // just
         // * direction opposite hai
         // System.out.println(ans);
 
-        int[] qb = new int[n + 1];
-        int dpcs = climbStairsMemoized(n, 0, qb);
-        System.out.println(dpcs);
-
+        // int[] qb = new int[n + 1];
+        // int dpcs = climbStairsMemoized(n, 0, qb);
+        // System.out.println(dpcs);
         // print(qb);
+
+        // int[] qb = new int[n + 1];
+        // int dpcs = climbStairsMemoized2(n, qb); // * doing the stair path way
+        // System.out.println(dpcs);
+        // print(qb);
+
+        int dpTab = climbStairsTab(n);
+        System.out.println(dpTab);
     }
 
     public static void print(int[] arr) {
@@ -46,6 +54,7 @@ public class Main {
     public static int climbStairsMemoized(int n, int currentPosition, int[] qb) {
 
         if (currentPosition == n) {
+            qb[currentPosition] = 1;
             return 1;
         }
 
@@ -65,5 +74,45 @@ public class Main {
         return jump_step_1 + jump_step_2 + jump_step_3;
     }
 
-    // TODO: public static int climbStairsTab(int n, int currentPosition)
+    public static int climbStairsMemoized2(int n, int[] qb) {
+
+        if (n == 0) {
+            qb[n] = 1;
+            return 1;
+        }
+
+        if (n < 0) {
+            return 0;
+        }
+
+        if (qb[n] != 0) {
+            return qb[n];
+        }
+
+        int nm1 = climbStairsMemoized2(n - 1, qb);
+        int nm2 = climbStairsMemoized2(n - 2, qb);
+        int nm3 = climbStairsMemoized2(n - 3, qb);
+        int countPaths = nm1 + nm2 + nm3;
+
+        qb[n] = countPaths;
+        return countPaths;
+    }
+
+    public static int climbStairsTab(int n) {
+        int[] dp = new int[n + 1];
+
+        for (int i = 0; i <= n; i++) {
+            if (i == 0) {
+                dp[0] = 1;
+            } else if (i == 1) {
+                dp[i] += dp[i - 1];
+            } else if (i == 2) {
+                dp[i] += dp[i - 1] + dp[i - 2];
+            } else {
+                dp[i] += dp[i - 1] + dp[i - 2] + dp[i - 3];
+            }
+        }
+        // print(dp);
+        return dp[n];
+    }
 }
