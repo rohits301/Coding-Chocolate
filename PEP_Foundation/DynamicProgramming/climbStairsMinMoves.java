@@ -4,77 +4,47 @@ import java.util.*;
 public class Main {
 
     public static void main(String[] args) throws Exception {
-        // write your code here
-        
         Scanner scn = new Scanner(System.in);
         int n = scn.nextInt();
         int[] arr = new int[n];
         
         for(int i = 0; i < n; i++){
-            arr[i] = scn.nextInt();    
+            arr[i] = scn.nextInt();
         }
-        int[] qb = new int[n + 1];
-        int ans = climbStairsMinJumps_Memo(arr, 0, qb);
-        System.out.println(ans);
-        print(qb);
         
-        // int dpAns = climbStairsMinJumps_Tab(arr);
-        // System.out.println(dpAns);
-        
+        int minMoves = climbStairsMM(arr);
+        System.out.println(minMoves);
     }
     
-    public static void print(int[] arr){
-        for(int val : arr){
-            System.out.print(val + " ");
+    private static int climbStairsMM(int[] arr){
+        int n = arr.length;
+        Integer[] dp = new Integer[n + 1];
+        dp[n] = 0;
+        
+        for(int i = n - 1; i >= 0; i--){
+            int min = Integer.MAX_VALUE;
+            for(int jump = 1; jump <= arr[i] && i + jump <= n; jump++){
+                // already handled since, it will not come into this loop
+                // if(arr[i] == 0){
+                //     continue;
+                // } 
+                
+                if(dp[i + jump] != null){
+                    min = Math.min(dp[i + jump], min);
+                }
+            }
+            if(min != Integer.MAX_VALUE){
+                dp[i] = min + 1;
+            } else {
+                dp[i] = null; // which is already null, hence this is redundant
+            }
         }
-        System.out.println();
+        // for(int i = 0; i <= n; i++){
+        //     System.out.print(dp[i] + " ");
+        // }
+        // System.out.println();
+        
+        return dp[0];
     }
-    
-    public static int climbStairsMinJumps_Memo(int[] arr, int i, int[] dp){
-        
-        if(i == arr.length - 1){
-            
-            return 1;
-        }
-        
-        if(dp[i] != 0){
-            return dp[i];
-        }
-        
-        if(arr[i] == 0){
-            return arr.length;
-        }
-        
-        int minMoves = arr.length;
-        
-        int val = 0;
-        for(int j = 1; j <= arr[i] && (i + j) < arr.length; j++){
-            val += climbStairsMinJumps_Memo(arr, i + j, dp);
-        }
-        minMoves = 1 + Math.min(minMoves, val);
-        
-        dp[i] = minMoves;
-        return minMoves;
-    }
-    
-    // public static int climbStairsMinJumps_Tab(int[] arr){
-    //     int n = arr.length;
-    //     int[] dp = new int[n + 1];
-        
-    //     for(int i = n; i >= 0; i--){
-    //         if(i == n){
-    //             dp[i] = 1;
-    //         } else {
-    //             for(int jump = 1; jump <= arr[i]; jump++){
-    //                 if(i + jump <= n){
-    //                     dp[i] += dp[jump + i];    
-    //                 }
-    //             } 
-    //         }
-    //     }
-        
-    //     // print(dp);
-    //     return dp[0];
-    // }
 
 }
