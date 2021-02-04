@@ -24,10 +24,8 @@ public class Main {
         dp[0] = 1; 
         
         for(int i = 0; i < arr.length; i++){
-            for(int j = 0; j < dp.length; j++){
-                if(j - arr[i] >= 0){
-                    dp[j] += dp[j - arr[i]];
-                }
+            for(int j = arr[i]; j < dp.length; j++){
+                dp[j] += dp[j - arr[i]];
             }
         }
         return dp[amt];
