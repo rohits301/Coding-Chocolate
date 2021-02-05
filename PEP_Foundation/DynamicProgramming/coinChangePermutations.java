@@ -14,18 +14,19 @@ public class Main {
         
         int amt = scn.nextInt();
         
-        int ans = ccCombinations(arr, amt);
+        int ans = ccPermutations(arr, amt);
         System.out.println(ans);
     }
-    
-    private static int ccCombinations(int[] arr, int amt){
+    private static int ccPermutations(int[] arr, int amt){
         int[] dp = new int[amt + 1];
         
-        dp[0] = 1; 
+        dp[0] = 1;
         
-        for(int i = 0; i < arr.length; i++){
-            for(int j = arr[i]; j < dp.length; j++){
-                dp[j] += dp[j - arr[i]];
+        for(int i = 1; i <= amt; i++){
+            for(int j = 0; j < arr.length; j++){
+                if(i >= arr[j]){ // can be paid
+                    dp[i] += dp[i - arr[j]];
+                }
             }
         }
         return dp[amt];
