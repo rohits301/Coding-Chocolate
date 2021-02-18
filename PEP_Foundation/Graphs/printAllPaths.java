@@ -36,26 +36,22 @@ public class Main {
         int src = Integer.parseInt(br.readLine());
         int dest = Integer.parseInt(br.readLine());
 
-        // write your code here
+        // write all your codes here
         boolean[] visited = new boolean[vtces];
-        boolean ans = hasPath(graph, src, dest, visited);
-        System.out.println(ans);
+        printAllPaths(graph, src, dest, visited, "");
     }
 
-    private static boolean hasPath(ArrayList<Edge>[] graph, int src, int dest, boolean[] visited) {
+    private static void printAllPaths(ArrayList<Edge>[] graph, int src, int dest, boolean[] visited, String psf) {
         if (src == dest) {
-            return true;
+            System.out.println(psf + dest + "");
+            return;
         }
-
         visited[src] = true;
         for (Edge var : graph[src]) {
             if (visited[var.nbr] == false) {
-                boolean nbrHasPath = hasPath(graph, var.nbr, dest, visited);
-                if (nbrHasPath == true) {
-                    return true;
-                }
+                printAllPaths(graph, var.nbr, dest, visited, psf + src + "");
             }
         }
-        return false;
+        visited[src] = false;
     }
 }
