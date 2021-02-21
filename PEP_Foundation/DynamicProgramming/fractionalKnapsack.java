@@ -1,3 +1,14 @@
+/*
+The code passes 4/5 test cases, the failed test case is as follows
+20
+1 43 22 25 10 7 17 16 7 2 12 11 37 40 48 35 1 35 3 25 
+8 5 5 2 7 3 2 4 5 6 10 3 9 6 10 4 7 7 10 3 
+4
+My ans = 42.5, same as gfg answer
+Expected = 42.2
+PEP solution is wrong passes only 3 test cases
+*/
+
 import java.io.*;
 import java.util.*;
 
@@ -75,8 +86,8 @@ public class Main {
 
                 // item can't be picked whole
                 double fraction = ((double) cap / (double) weight);
-                totalValue += (value * fraction);
-                cap = (int) (cap - (weight * fraction));
+                totalValue += ((double) value * fraction);
+                cap = (int) (cap - ((double) weight * fraction));
                 break;
             }
         }
