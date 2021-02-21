@@ -37,8 +37,14 @@ public class Main {
 
         // write all your codes here
 
-        HashSet<Integer> visited = new HashSet<>(); // better than boolean array since // loop not require to check all
-                                                    // elements visited
+        // ArrayList<Edge> al = graph[6];
+        // for(int i = 0; i < al.size(); i++){
+        // Edge e = al.get(i);
+        // System.out.println(e.src + "->" + e.nbr + " @ " + e.wt);
+        // }
+
+        HashSet<Integer> visited = new HashSet<>(); // better than boolean array since 
+                                                    // loop not require to check all elements visited
 
         hamiltonian(graph, src, visited, src + "", src); // last is originalsource
 
@@ -65,6 +71,7 @@ public class Main {
             } else {
                 System.out.println("."); // path
             }
+            return;
         }
 
         visited.add(src);
