@@ -18,9 +18,14 @@ public class Main {
                     // if(compGold > maxGold){
                     // maxGold = compGold;
                     // }
+
                     if (compGold > max) {
                         max = compGold;
+                        // System.out.println("Max Gold = " + max);
                     }
+                    // else {
+                    // System.out.println("Max Gold not updated");
+                    // }
                 }
             }
         }
@@ -33,12 +38,13 @@ public class Main {
         }
 
         visited[i][j] = true;
-        int lg = dfs(arr, i, j - 1, visited); // left
-        int ug = dfs(arr, i - 1, j, visited); // up
-        int rg = dfs(arr, i, j + 1, visited); // right
-        int dg = dfs(arr, i + 1, j, visited); // down
+        int lg = dfs(arr, i, j - 1, visited); // left, e
+        int ug = dfs(arr, i - 1, j, visited); // up, n
+        int rg = dfs(arr, i, j + 1, visited); // right, w
+        int dg = dfs(arr, i + 1, j, visited); // down, s
 
-        int tg = arr[i][j] + lg + ug + rg + dg; // totalGold
+        int tg = arr[i][j] + lg + ug + rg + dg;
+        // System.out.println("Total Gold = " + tg);
         return tg;
     }
 
