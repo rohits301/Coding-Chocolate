@@ -3,27 +3,28 @@ import java.util.*;
 
 public class Main {
 
+    //* Direction Array Approach for IsSafe
+    /*
     public static boolean IsQueenSafe(boolean[][] chess, int row, int col) {
-        // int[] dArrX = {0, -1, -1, -1};
-        // int[] dArrY = {-1, -1, 0, 1};
-        
-        // int n = chess.length;
-        
-        // for(int d = 1; d < n; d++){
-        //     for(int i = 0; i < dArrX.length; i++){
-                
-        //         int x = row + d * dArrX[i];
-        //         int y = col + d * dArrY[i];
-                
-        //         // System.out.print(x + ", " + y + " <-> ");
-        //         if(x < 0 || y < 0 || y >= n || chess[x][y] == true){
-        //             return false;
-        //         } 
-        //     }
-        //     // System.out.println();
-        // }
-        // return true;
-        
+        int[] dArrX = { 0, -1, -1, -1 };
+        int[] dArrY = { -1, -1, 0, 1 };
+
+        for (int radius = 1; radius < Math.max(chess.length, chess[0].length); radius++) {
+            for (int d = 0; d < 4; d++) {
+
+                int x = row + radius * dArrX[d];
+                int y = col + radius * dArrY[d];
+
+                if (x >= 0 && y >= 0 && y < chess[0].length && x < chess.length && chess[x][y]) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    */
+    public static boolean IsQueenSafe(boolean[][] chess, int row, int col) {
+
         for(int i = row, j = col; j >= 0; j--){
             if(chess[i][j]){
                 return false;
