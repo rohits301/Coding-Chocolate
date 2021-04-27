@@ -3,18 +3,20 @@ import java.util.*;
 
 public class Main {
 
-    private static void wordsKSelection1(char[] charray, int currentBox, int totalBoxes, int selectionSoFar,
+    private static void wordsKSelection1(String str, int currentBox, int totalBoxes, int selectionSoFar,
             int totalSelections, String asf) {
-            
-            if(currentBox == totalBoxes){
-                if(selectionSoFar == totalSelections){
-                    System.out.println(asf);
-                }
-                return;
+
+        if (currentBox == str.length()) {
+            if (selectionSoFar == totalSelections) {
+                System.out.println(asf);
             }
-            
-            wordsKSelection1(charray, currentBox + 1, totalBoxes, selectionSoFar + 1, totalSelections, asf + charray[currentBox]); // yes.
-            wordsKSelection1(charray, currentBox + 1, totalBoxes, selectionSoFar, totalSelections, asf); // no.
+            return;
+        }
+
+        char ch = str.charAt(currentBox);
+
+        wordsKSelection1(str, currentBox + 1, totalBoxes, selectionSoFar + 1, totalSelections, asf + ch); // yes.
+        wordsKSelection1(str, currentBox + 1, totalBoxes, selectionSoFar, totalSelections, asf); // no.
     }
 
     public static void main(String[] args) throws Exception {
@@ -25,18 +27,26 @@ public class Main {
 
         HashSet<Character> hs = new HashSet<>();
 
+        StringBuilder sb = new StringBuilder();
         for (char ch : str.toCharArray()) {
-            hs.add(ch);
+            if (!hs.contains(ch)) {
+                hs.add(ch);
+                sb.append(ch);
+            }
         }
         // System.out.println(hs);
 
-        char[] charray = new char[hs.size()];
-        int i = 0;
-        for (Character ele : hs) {
-            charray[i] = ele;
-            i++;
-        }
-        wordsKSelection1(charray, 0, charray.length, 0, k, "");
+        // * Array method gives answer but the string is different
+        // * i.e. the order is different hence, better to use String
+
+        /*
+         * char[] charray = new char[hs.size()]; 
+         * int i = 0; 
+         * for (Character ele : hs) {
+         *  charray[i] = ele; i++; 
+         * }
+         */
+        wordsKSelection1(sb.toString(), 0, sb.length(), 0, k, "");
     }
 
 }
