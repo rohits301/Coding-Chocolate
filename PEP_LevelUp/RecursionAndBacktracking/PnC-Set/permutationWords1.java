@@ -3,10 +3,10 @@ import java.util.*;
 
 public class Main {
 
-    public static void generateWords(int cs, int ts, HashMap<Character, Integer> fmap, String asf) {
+    public static void generateWords(int currentBox, int totalBoxes, HashMap<Character, Integer> fmap, String asf) {
         // write your code here
 
-        if (cs > ts) {
+        if (currentBox > totalBoxes) {
             System.out.println(asf);
             return;
         }
@@ -14,10 +14,11 @@ public class Main {
         for (char ch : fmap.keySet()) {
             if (fmap.get(ch) > 0) {
                 fmap.put(ch, fmap.get(ch) - 1);
-                generateWords(cs + 1, ts, fmap, asf + ch);
+                generateWords(currentBox + 1, totalBoxes, fmap, asf + ch);
                 fmap.put(ch, fmap.get(ch) + 1);
             }
         }
+
     }
 
     public static void main(String[] args) throws Exception {
