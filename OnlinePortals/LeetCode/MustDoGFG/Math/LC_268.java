@@ -1,3 +1,4 @@
+package MustDoGFG.Math;
 class Solution {
     public int missingNumber(int[] nums) {
         
