@@ -16,7 +16,7 @@ public class Main {
             }
         }
 
-        return j == popped.length;
+        return j == popped.length; //* or st.size() == 0
     }
 
     public static int[] getArr(String s) {
