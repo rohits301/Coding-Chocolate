@@ -54,6 +54,7 @@ class Main {
     
         ListNode mid = midNode(head);
         ListNode newHead = mid.next; 
+        mid.next = null; // **V. Important**
         
         // reversing second half of list
         newHead = reverse(newHead);
