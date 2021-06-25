@@ -27,7 +27,7 @@ public class Main {
         exactlyOneChild(node.right, ans);
 
     }
-
+    
     public static ArrayList<Integer> exactlyOneChild(TreeNode root) {
         ArrayList<Integer> ans = new ArrayList<>();
 
