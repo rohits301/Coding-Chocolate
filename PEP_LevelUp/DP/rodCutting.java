@@ -19,6 +19,11 @@ public class Main {
             dp[i] = max;
         }
 
+        // for(int val : dp){
+        //     System.out.print(val + " ");
+        // }
+        // System.out.println();
+    
         return dp[n];
     }
 
