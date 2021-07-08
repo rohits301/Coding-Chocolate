@@ -1,12 +1,12 @@
 class Solution {
     // Function to return max value that can be put in knapsack of capacity W.
     static int knapSack(int cap, int wts[], int val[], int n) {
-        // Space : O(cap), solution
+        // S : O(cap) - LINEAR, T: O(n * cap)
 
         // introduce effect of wts in a top-down manner
         // memoise jaisa hai
-        // for each value of j, start from j backwards
-        // and introduce effect of each wts[i - 1] if possible
+        // for each wts[i-1], start j from cap,
+        // introduce effect of each wt if possible
 
         int[] dp = new int[cap + 1];
 
@@ -19,7 +19,7 @@ class Solution {
         }
 
         // for(int ele : dp){
-        // System.out.print(ele + " ");
+        //     System.out.print(ele + " ");
         // }
         // System.out.println();
 
