@@ -3,15 +3,15 @@ import java.io.*;
 
 public class Main {
 
-    // *OPTIMISED* => T: O(min(log(n,m)), S: O(1)
-    public static double find(int[] a1, int[] a2) {
+    // *OPTIMISED* => T: O(min(log(n,m)), S: O(1), passed on LeetCode
+    public static double find(int[] a, int[] b) {
         // write your code here
         if (a.length > b.length) {
             int[] temp = a;
             a = b;
             b = temp;
         }
-        
+
         int lo = 0;
         int hi = a.length;
         int te = a.length + b.length;
