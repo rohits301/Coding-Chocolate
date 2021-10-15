@@ -3,38 +3,44 @@ import java.util.*;
 
 public class Main {
 
+    // T: O(n+k), S: O(n+k), n=arr.length, k=range
     public static void countSort(int[] arr, int min, int max) {
         // PRODUCTION LEVEL CODE
 
         int[] sortedArray = new int[arr.length];
 
-        int size = max - min + 1; // range
-        int[] frequencyArray = new int[size];
-        int[] prefixSumArray = new int[size];
+        int range = max - min + 1;
+        int[] farr = new int[range]; // frequency arr
 
-        // fill the frequency array
+        // 1. fill the frequency array
+
         for (int val : arr) {
-            frequencyArray[val - min]++;
+            int fidx = val - min;
+            farr[fidx]++;
         }
-        // print(frequencyArray);
-        // fill the prefix Sum array
-        prefixSumArray[0] = frequencyArray[0] - 1; // -1 is specific to this question
-        for (int i = 1; i < size; i++) {
-            prefixSumArray[i] = prefixSumArray[i - 1] + frequencyArray[i];
-        }
-        // System.out.println("hey!");
-        // print(prefixSumArray);
 
-        // back traversal, fill sortedArray
+        // 2. fill the freq. arr with prefix sum - 1
+        
+        int ps = 0; // prefix sum
+        for (int i = 0; i < farr.length; i++) {
+            ps += farr[i];
+            farr[i] = ps - 1; // -1 for index
+        }
+        // Now it contains last index where value appears
+
+        // 3. back traversal of arr and fill sortedArray
+
         for (int i = arr.length - 1; i >= 0; i--) {
-            int val = arr[i];
-            int idx = prefixSumArray[val - min];
+            int fidx = arr[i] - min;
+            int fval = farr[fidx];
 
-            sortedArray[idx] = val;
-            prefixSumArray[val - min]--;
+            sortedArray[fval] = arr[i];
+            farr[fidx]--;
         }
 
-        // IMPORTANT TO TAKE SEPARATE ARRAY
+        // * IMPORTANT TO TAKE SEPARATE ARRAY
+        // 4. copy back to original arr
+
         for (int i = 0; i < arr.length; i++) {
             arr[i] = sortedArray[i];
         }
