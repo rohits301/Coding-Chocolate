@@ -2,13 +2,15 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
+
+    // T: O(n * b), S: O(n), since k = 10
+    // b = no. of digits in maximum value
     public static void radixSort(int[] arr) {
         // write code here
+
         int max = Integer.MIN_VALUE;
         for (int val : arr) {
-            if (max < val) {
-                max = val;
-            }
+            max = Math.max(max, val);
         }
 
         int exp = 1;
@@ -19,34 +21,39 @@ public class Main {
     }
 
     public static void countSort(int[] arr, int exp) {
-        int[] sortedArray = new int[arr.length];
+        // write code here
 
-        int size = 10; // range
-        int[] frequencyArray = new int[size];
+        int[] ans = new int[arr.length];
 
-        // fill the frequency array
-        for (int val : arr) {
-            frequencyArray[val / exp % 10]++;
-        }
-        // find the prefixSum
-        frequencyArray[0] = frequencyArray[0] - 1; // -1 is specific to this question
-        for (int i = 1; i < size; i++) {
-            frequencyArray[i] = frequencyArray[i - 1] + frequencyArray[i];
-        }
+        int[] farr = new int[10]; // range = 9 - 0 + 1 = 10
 
-        // back traversal, fill sortedArray
-        for (int i = arr.length - 1; i >= 0; i--) {
-            int val = arr[i];
-            int idx = frequencyArray[val / exp % 10];
-
-            sortedArray[idx] = val;
-            frequencyArray[val / exp % 10]--;
-        }
-
-        // IMPORTANT TO TAKE SEPARATE ARRAY
+        // 1. freq. array
         for (int i = 0; i < arr.length; i++) {
-            arr[i] = sortedArray[i];
+            int fidx = arr[i] / exp % 10; // * extract digit *
+            farr[fidx]++;
         }
+
+        // 2. prefix sum, farr contains index now
+        int ps = 0;
+        for (int i = 0; i < farr.length; i++) {
+            ps += farr[i];
+            farr[i] = ps - 1;
+        }
+
+        // 3. back traversal
+        for (int i = arr.length - 1; i >= 0; i--) {
+            int fidx = arr[i] / exp % 10;
+            int fval = farr[fidx]; // index of last location for arr[i]
+
+            ans[fval] = arr[i];
+            farr[fidx]--;
+        }
+
+        // 4. copy to original arr
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = ans[i];
+        }
+
         System.out.print("After sorting on " + exp + " place -> ");
         print(arr);
     }
